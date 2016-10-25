@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+<!-- your webpage info goes here -->
+
+    <title>Employee Management</title>
+	
+	<meta name="author" content="your name" />
+	<meta name="description" content="" />
+
+<!-- you should always add your stylesheet (css) in the head tag so that it starts loading before the page html is being displayed -->	
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<style>
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=number], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#button1 {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#button1:hover {
+    background-color: #45a049;
+}
+
+#div1 {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 30%;
+    margin: auto;
+}
+#lebel1{
+   display: block;
+}
+
+
+table, td, th {
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
+</style>
+
+<script>
+debugger
+function insertionPage(){
+	var insert = "<div style='margin:20px'><h2>Add Employee Details</h2></div>"+"<div id='div1'><body><label id='lebel1'>First Name</label><input type='text' name='fName' id='fName' ><p style='color:red' id='header6'></p>"+
+	"<label id='lebel1'>Last Name</label><input type='text' name='lName' id='lName'><p style='color:red' id='header1'></p>"+
+	"<label id='lebel1'>Gender</label><input type='text' name='gender' id='gender'><p style='color:red' id='header1'></p>"+
+	"<label id='lebel1'>Email</label><input type='email' name='email' id='email'><p style='color:red' id='header1'></p>"+
+	"<label id='lebel1'>Password</label><input type='password' name='password' id='password'><p style='color:red' id='header1'></p>"+
+	      "<label id='lebel1'>Address</label><input type='text' name='address' id='address'><p style='color:red' id='header2'></p>"+
+		"<label id='lebel1'>Age</label><input type='number' name='age' placeholder='Age should be greater than 18 and less than 100' id='age' min='18' max='100' ><p style='color:red' id='header4'></p>"+
+		"<label id='lebel1'>Salary</label><input type='number' placeholder='Salary should be less than 900000' name='salary' id='salary' min='0' max='900000'><p style='color:red' id='header5'></p>"+
+		"<label id='lebel1'>Date of Joining</label><input type='date' name='dateOfJoining' id='dateOfJoining'><p style='color:red' id='header1'></p>"+
+		"<button id='button1' onclick='return addEmployee()'>Add Information</button><p style='color:red' id='header'></div>";
+	
+	document.getElementById("content").innerHTML = insert;	
+}
+function GetDetailByIdPage(){
+	var getById = "<div style='margin:20px'><h2>Get Employee Details</h2></div>"+"<div style='margin-top:30px' id='div1'><body><label id='lebel1'>Employee Id</label><input type='number' name='empId' id='empId' >"+	
+	"<button id='button1' onclick='return getEmployeeById()'>Get Detail</button><p style='color:red' id='header'></div>";
+	
+	document.getElementById("content").innerHTML = getById;	
+}
+
+  function deleteDetailByIdPage(){
+	var deletePage = "<div style='margin:20px'><h2>Delete Employee Details</h2></div>" + "<div style='margin-top:30px' id='div1'><body><label id='lebel1'>Employee Id</label><input type='number' name='empId' id='empId' >" +	
+	"<button id='button1' onclick='return deleteById()'>Delete</button><p style='color:red' id='header'></div>";
+	document.getElementById("content").innerHTML = deletePage;	
+} 
+ function updateEmployeeDetailIdPage(){
+	var updatePage = "<div style='margin:20px'><h2>Update Employee Details</h2></div>"+"<div id='div1'><body><label id='lebel1'>Employee Id</label><input type='text' name='empId' id='empId' >"+	
+	"<button id='button1' onclick='return getEmployeeByIdForUpdate()'>Get Detail</button><p style='color:red' id='header'></div>"
+	+"<br><br><br><br>"+
+	"<div id='div1'><body><label id='lebel1'>First Name</label><input type='text' name='fName' id='fName' ><p style='color:red' id='header2'></p>"+
+	"<label id='lebel1'>Last Name</label><input type='text' name='lName' id='lName'><p style='color:red' id='header3'></p>"+
+	"<label id='lebel1'>Gender</label><input type='text' name='gender' id='gender'><p style='color:red' id='header1'></p>"+
+	"<label id='lebel1'>Email</label><input type='email' name='email' id='email'><p style='color:red' id='header1'></p>"+
+	"<label id='lebel1'>Password</label><input type='text' name='password' id='password'><p style='color:red' id='header1'></p>"+
+	      "<label id='lebel1'>Address</label><input type='text' name='address' id='address'><p style='color:red' id='header2'></p>"+
+		"<label id='lebel1'>Age</label><input type='number' name='age' placeholder='Age should be greater than 18 and less than 100' id='age' min='18' max='100' ><p style='color:red' id='header4'></p>"+
+		"<label id='lebel1'>Salary</label><input type='number' placeholder='Salary should be less than 900000' name='salary' id='salary' min='0' max='900000'><p style='color:red' id='header5'></p>"+
+		"<label id='lebel1'>Date of Joining</label><input type='date' name='dateOfJoining' id='dateOfJoining'><p style='color:red' id='header1'></p>"+
+			"<button id='button1' onclick='return updateEmployeeById()'>Update </button><p style='color:red' id='header1'></div>";
+	document.getElementById("content").innerHTML = updatePage;	
+}  
+      function uploadPage(){
+		/*  alert("In upload Page Script"); */
+			var upload = "<div style='margin:20px'><h2>Upload File </h2></div>"+"<div id='div1'><body><label id='lebel1'>Choose File</label><form method='POST' onsubmit=' return uploadFile(this)' action='/upload' enctype='multipart/form-data'><input type='file' name='file' id='file' multiple><p style='color:red' id='header6'></p>"+
+				"<input type='submit' value='Upload'>Upload</form><p style='color:red' id='header'></div>";
+			
+			document.getElementById("content").innerHTML = upload;	
+		}
+function addEmployee() {	
+	if(addEmployeeValiadte()){
+  var  xhr = new XMLHttpRequest();
+    var url = "http://192.168.51.50:8080/employee/emp/";
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.onreadystatechange = function () { 
+        if (xhr.readyState == 4 && xhr.status == 200) {
+        	document.getElementById("header").innerHTML = xhr.responseText;
+        }
+        else if(xhr.status==400 ||xhr.status==500)
+		{
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+	else
+		{
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+    };
+    var emp = JSON.stringify({
+    	"fName": document.getElementById("fName").value,
+    	"lName": document.getElementById("lName").value,
+    	"gender": document.getElementById("gender").value,
+    	"email": document.getElementById("email").value,
+    	"password": document.getElementById("password").value,
+    	"address": document.getElementById("address").value,
+    	"age": document.getElementById("age").value,
+    	"salary": document.getElementById("salary").value,
+    	"dateOfJoining": document.getElementById("dateOfJoining").value
+    	
+    	});
+    
+    xhr.send(emp);
+  }
+}
+function addEmployeeValiadte(){
+	var FNAME=document.getElementById("fName");
+	var LNAME=document.getElementById("lName");
+	var ADDRESS=document.getElementById("address");
+	var AGE=document.getElementById("age");
+	var SALARY=document.getElementById("salary");
+	var GENDER=document.getElementById("gender");
+	var EMAIL=document.getElementById("email");
+	var PASSWORD=document.getElementById("password");
+	var DATEOFJOINING=document.getElementById("dateOfJoining");
+	debugger
+	if(FNAME.value.length<1)
+	{
+		document.getElementById("header6").innerHTML ="Enter First Name";
+		FNAME.focus();
+		FNAME.style.border="solid 1px red";
+		return false;
+	}
+	else if(LNAME.value.length<1)
+		{
+		document.getElementById("header1").innerHTML ="Enter Last Name";
+		LNAME.focus();
+		LNAME.style.border="solid 1px red";
+		return false;
+		}
+	
+	else if(LNAME.value.length<1)
+	{
+	document.getElementById("header1").innerHTML ="Enter Last Name";
+	LNAME.focus();
+	LNAME.style.border="solid 1px red";
+	return false;
+	}
+	else if(GENDER.value.length<1)
+	{
+	document.getElementById("header1").innerHTML ="Select Gender";
+	GENDER.focus();
+	GENDER.style.border="solid 1px red";
+	return false;
+	}
+	else if(EMAIL.value.length<1)
+	{
+	document.getElementById("header1").innerHTML ="Enter email ";
+	EMAIL.focus();
+	EMAIL.style.border="solid 1px red";
+	return false;
+	}
+	else if(PASSWORD.value.length<1)
+	{
+	document.getElementById("header1").innerHTML ="Enter Password ";
+	PASSWORD.focus();
+	PASSWORD.style.border="solid 1px red";
+	return false;
+	}
+	else if(ADDRESS.value.length<1)
+	{
+	document.getElementById("header2").innerHTML ="Enter Address Details";
+	ADDRESS.focus();
+	ADDRESS.style.border="solid 1px red";
+	return false;
+	}
+	else if(AGE.value=="")
+	{
+	document.getElementById("header4").innerHTML ="Enter Age Detail";
+	AGE.focus();
+	AGE.style.border="solid 1px red";
+	return false;
+	}
+	else if(AGE.value < 18 || AGE.value >100)
+	{
+	document.getElementById("header4").innerHTML ="Age should be greater than 18 or less than 100";
+	AGE.focus();
+	AGE.style.border="solid 1px red";
+	return false;
+	}
+	else if(SALARY.value == "" )
+	{
+	document.getElementById("header5").innerHTML ="Enter Salary Detail";
+	SALARY.focus();
+	SALARY.style.border="solid 1px red";
+	return false;
+	} 
+	else if(SALARY.value < 0 || SALARY.value > 90000)
+	{
+	document.getElementById("header5").innerHTML ="Enter Valid Salary ";
+	SALARY.focus();
+	SALARY.style.border="solid 1px red";
+	return false;
+	} 
+	else if(DATEOFJOINING.value.length<1)
+	{
+	document.getElementById("header1").innerHTML ="Choose Date of Joining ";
+	DATEOFJOINING.focus();
+	DATEOFJOINING.style.border="solid 1px red";
+	return false;
+	}
+   return true;
+}
+
+
+function getEmployeeById() {
+	var string;
+	if(getEmployeeByIdValiadate())
+		{
+	var xhr = new XMLHttpRequest();
+	var url = "http://192.168.51.50:8080/employee/emp/"
+			+ document.getElementById("empId").value;
+	xhr.open("GET", url, false);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var emp;
+			emp = JSON.parse(xhr.responseText);
+			string ="<h2>Employee Detail</h2>"+
+					"<p></p>"+
+					"<table>"+
+					"<tr>"+
+					" <th>Employee Id</th>"+
+					" <th>Firstname</th>"+
+					"<th>Lastname</th>"+
+				    "<th>Gender </th>"+
+				    "<th>Email</th>"+
+				    "<th>Password</th>"+
+				    "<th>Address</th>"+
+				    "<th>Age</th>"+
+				    "<th>Salary</th>"+
+				    "<th>Date of Joining</th>"+
+						 " </tr>"+
+						 " <tr>"+
+						 "<td>"+emp.empId+"</td>"+
+						    "<td>"+emp.fName+"</td>"+
+						   " <td>"+emp.lName+"</td>"+
+						   " <td>"+emp.gender+"</td>"+
+						   " <td>"+emp.email+"</td>"+
+						   " <td>"+emp.password+"</td>"+
+						   " <td>"+emp.address+"</td>"+
+						    "<td>"+emp.age+"</td>"+
+						    "<td>"+emp.salary+"</td>"+
+						    "<td>"+emp.dateOfJoining+"</td>"+
+						  "</tr></table>";
+			document.getElementById("content").innerHTML = string;
+		}
+		else if(xhr.status==400 ||xhr.status==500)
+			{
+			 document.getElementById("header").innerHTML=xhr.responseText;
+			}
+		else
+			{ document.getElementById("header").innerHTML=xhr.responseText;
+			}
+			
+			};
+	
+	
+	xhr.send();
+     }
+	
+}
+
+function getEmployeeByIdValiadate(){
+	var EMPID=document.getElementById("empId");
+	    if(EMPID.value=="")
+		{
+	    	document.getElementById("header").innerHTML="Enter Employee Id";
+	    	EMPID.focus();
+	    	EMPID.style.border="solid 1px red";
+	    	return false;
+		}
+	    else if(EMPID.value==0)
+		{
+	    	document.getElementById("header").innerHTML="Enter Valid Employee Id";
+	    	EMPID.focus();
+	    	EMPID.style.border="solid 1px red";
+	    	return false;
+		}
+	return true;
+}
+function deleteByIdValiadate(){
+	var EMPID=document.getElementById("empId");
+	    if(EMPID.value=="")
+		{
+	    	document.getElementById("header").innerHTML="Enter Employee Id";
+	    	EMPID.focus();
+	    	EMPID.style.border="solid 1px red";
+	    	return false;
+		}
+	    else if(EMPID.value==0)
+		{
+	    	document.getElementById("header").innerHTML="Enter Valid Employee Id";
+	    	EMPID.focus();
+	    	EMPID.style.border="solid 1px red";
+	    	return false;
+		}
+	return true;
+}
+function deleteById() {
+
+	var emp;
+	var string;
+	if(deleteByIdValiadate()){
+		var c=confirm("Do you Really want to delete ?");
+		if(c==true)
+			{
+	xhr = new XMLHttpRequest();
+	var url = "http://192.168.51.50:8080/employee/emp/"
+			+ document.getElementById("empId").value;
+	xhr.open("DELETE", url, false);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			
+			document.getElementById("header").innerHTML = xhr.responseText;
+		}
+		else if(xhr.status==400||xhr.status==500)
+		{
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+	    else
+		{
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+	};
+	
+	xhr.send();
+			}
+		else
+			{
+			 document.getElementById("header").innerHTML="Your Data is not Deleted.";
+			  
+			}
+			
+	}
+	
+}
+function employeeList() {
+	 
+	var emp;
+	var string;
+	var xhr = new XMLHttpRequest();
+	var url = "http://192.168.51.50:8080/employee/emp/";
+	xhr.open("GET", url, false);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+			emp = JSON.parse(xhr.responseText);
+			string = "<h2>All Employee Details</h2>"+
+			"<p></p>"+
+			"<table>"+
+			"<tr>"+
+			"<th>Employee Id</th>"+
+			" <th>Firstname</th>"+
+				    "<th>Lastname</th>"+
+				    "<th>Gender </th>"+
+				    "<th>Email</th>"+
+				    "<th>Password</th>"+
+				    "<th>Address</th>"+
+				    "<th>Age</th>"+
+				    "<th>Salary</th>"+
+				    "<th>Date of Joining</th>"+
+				 " </tr>";
+			for (var i = 0; i < emp.length; i++) { 
+				string+=" <tr>"+
+				       " <td>"+ emp[i].empId+"</td>"+
+					    "<td>"+ emp[i].fName+"</td>"+
+					   " <td>"+ emp[i].lName+"</td>"+
+					   " <td>"+ emp[i].gender+"</td>"+
+					   " <td>"+ emp[i].email+"</td>"+
+					   " <td>"+ emp[i].password+"</td>"+
+					   " <td>"+ emp[i].address+"</td>"+
+					   " <td>"+ emp[i].age+"</td>"+
+					    "<td>"+ emp[i].salary+"</td>"+
+					    " <td>"+ emp[i].dateOfJoining+"</td>"+
+					  "</tr>";
+	
+						
+			}
+			string=string+"</table>"
+			document.getElementById("content").innerHTML = string;
+		}
+	else
+		{
+		 document.getElementById("main1").innerHTML=xhr.responseText;
+		}
+	};
+	
+	xhr.send();
+}	
+
+function updateEmployeeByIdValiadte(){
+	var FNAME=document.getElementById("fName");
+	var LNAME=document.getElementById("lName");
+	var ADDRESS=document.getElementById("address");
+	var AGE=document.getElementById("age");
+	var SALARY=document.getElementById("salary");
+	debugger
+	if(FNAME.value.length<1)
+	{
+		document.getElementById("header2").innerHTML ="Enter First Name";
+		FNAME.focus();
+		FNAME.style.border="solid 1px red";
+		return false;
+	}
+	else if(LNAME.value.length<1)
+		{
+		document.getElementById("header3").innerHTML ="Enter Last Name";
+		LNAME.focus();
+		LNAME.style.border="solid 1px red";
+		return false;
+		}
+	else if(ADDRESS.value.length<1)
+	{
+	document.getElementById("header4").innerHTML ="Enter Address Details";
+	ADDRESS.focus();
+	ADDRESS.style.border="solid 1px red";
+	return false;
+	}
+	else if(AGE.value=="")
+	{
+	document.getElementById("header5").innerHTML ="Enter Age Detail";
+	AGE.focus();
+	AGE.style.border="solid 1px red";
+	return false;
+	}
+	else if(AGE.value < 18 || AGE.value >100)
+	{
+	document.getElementById("header5").innerHTML ="Enter Valid Age Between 18 to 100";
+	AGE.focus();
+	AGE.style.border="solid 1px red";
+	return false;
+	}
+	else if(SALARY.value == "" )
+	{
+	document.getElementById("header6").innerHTML ="Enter Salary Detail";
+	SALARY.focus();
+	SALARY.style.border="solid 1px red";
+	return false;
+	} 
+	else if(SALARY.value < 0 || SALARY.value > 900000)
+	{
+	document.getElementById("header6").innerHTML ="Enter Valid Salary ";
+	SALARY.focus();
+	SALARY.style.border="solid 1px red";
+	return false;
+	}
+   return true;
+}
+function updateEmployeeById() {
+	var emp;
+	var string;
+	if(updateEmployeeByIdValiadte())
+		{
+	xhr = new XMLHttpRequest();
+	var url = "http://192.168.51.50:8080/employee/emp/"+ document.getElementById("empId").value;
+	xhr.open("PUT", url, false);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 || xhr.status == 200) {
+			document.getElementById("header1").innerHTML = xhr.responseText;
+		}
+		else if (xhr.readyState == 400 || xhr.status == 500) {
+			document.getElementById("header1").innerHTML = xhr.responseText;
+		}
+		else
+			document.getElementById("header1").innerHTML = xhr.responseText;
+	};
+	
+	var emp = {
+			"fName" : document.getElementById("fName").value,
+			"lName" : document.getElementById("lName").value,
+			"gender" : document.getElementById("gender").value,
+			"email" : document.getElementById("email").value,
+			"password" : document.getElementById("password").value,
+			"address" : document.getElementById("address").value,
+			"age" : document.getElementById("age").value,
+			"salary" : document.getElementById("salary").value,
+			"dateOfJoining" : document.getElementById("dateOfJoining").value
+			
+		};
+
+		var empOne = JSON.stringify(emp);
+		
+	xhr.send(empOne);//sending the object
+		}
+	
+}
+
+function getEmployeeByIdForUpdateValiadate(){
+	var EMPID=document.getElementById("empId");
+	    if(EMPID.value=="")
+		{
+	    	document.getElementById("header").innerHTML="Enter Employee Id";
+	    	EMPID.focus();
+	    	EMPID.style.border="solid 1px red";
+	    	return false;
+		}
+	    else if(EMPID.value==0)
+		{
+	    	document.getElementById("header").innerHTML="Enter Valid Employee Id";
+	    	EMPID.focus();
+	    	EMPID.style.border="solid 1px red";
+	    	return false;
+		}
+	return true;
+}
+function getEmployeeByIdForUpdate() {
+	var emp;
+	var string;
+	if(getEmployeeByIdForUpdateValiadate())
+		{
+	xhr = new XMLHttpRequest();
+	var url = "http://192.168.51.50:8080/employee/emp/"
+			+ document.getElementById("empId").value;
+	xhr.open("GET", url, false);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			emp = JSON.parse(xhr.responseText);
+			document.getElementById("fName").value= emp.fName;
+			document.getElementById("lName").value= emp.lName;
+			document.getElementById("gender").value= emp.gender;
+			document.getElementById("email").value= emp.email;
+			document.getElementById("password").value= emp.password;
+			document.getElementById("address").value= emp.address;
+			document.getElementById("age").value= emp.age;
+			document.getElementById("salary").value= emp.salary;
+			document.getElementById("dateOfJoining").value= emp.dateOfJoining;
+			document.getElementById("success").innerHTML = string;
+		}
+		else if(xhr.status==400||xhr.status==500)
+		{
+		 document.getElementById("header").innerHTML="Enter Valid Detail";
+		}
+	else
+		{
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+	};
+	
+	xhr.send();
+		}
+}
+
+  function uploadFile(fileData) {	
+	
+		alert('In upload File');
+  var  xhr = new XMLHttpRequest();
+    var url = "http://192.168.51.50:8080/upload/";
+    xhr.open("POST", url, false);
+   /*  xhr.setRequestHeader("Content-type", "multipart/form-data"); */
+    xhr.onreadystatechange = function () { 
+        if (xhr.readyState == 4 && xhr.status == 200) {
+        	document.getElementById("header").innerHTML = xhr.responseText;
+        }
+        else if(xhr.status==400 ||xhr.status==500)
+		{
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+	else
+		{
+		
+		 document.getElementById("header").innerHTML=xhr.responseText;
+		}
+    };
+ 
+  xhr.send(new FormData(fileData));
+  return false;
+  }  
+
+	
+	function uploadList() {
+		/*  alert("In uplaodList"); */
+		var emp;
+		var string;
+		var xhr = new XMLHttpRequest();
+		var url = "http://192.168.51.50:8080/list/";
+		xhr.open("GET", url, false);
+		xhr.setRequestHeader("Content-type", "application/json");
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+				emp = JSON.parse(xhr.responseText);
+			/* 	alert(emp); */
+				string = "<h2>All Uplaoded File Details</h2><br><br><h4>Click on File to Download</h4>"+
+				"<p></p>"+
+				"<table>"+
+				"<tr>"+
+				" <th>File Name</th>"+
+					 " </tr>"; 
+				for (var i = 0; i < emp.length; i++) { 
+					string+="<tr><td><a  href='http://192.168.51.50:8080/download?type="+emp[i]+"'>"+emp[i]+"</a></td><tr>";
+		/* alert(emp[i]); */
+							
+				}
+				string=string+"</table>" 
+				document.getElementById("content").innerHTML = string;
+			}
+		else
+			{
+			/*  alert(xhr.responseText); */
+			 document.getElementById("main1").innerHTML=xhr.responseText;
+			}
+		};
+		
+		xhr.send();
+	}	 
+	
+	
+</script>
+	
+</head>
+<body>
+
+<!-- webpage content goes here in the body -->
+
+	<div id="page">
+		<div id="logo">
+			<h1><a style="list-style: none;" href="/" id="logoLink">Employee Management System</a></h1>
+		</div>
+		<div id="nav">
+			<ul>
+				<li><a  href="#" onclick="insertionPage()">Add </a></li>
+				<li><a href="#" onclick="GetDetailByIdPage()">Get Detail</a></li>
+				<li><a href="#" onclick="employeeList()">Get List</a></li>
+				<li><a href="#" onclick="deleteDetailByIdPage()">Delete</a></li>
+				<li><a href="#" onclick="updateEmployeeDetailIdPage()">Update</a></li>
+				<li><a href="#" onclick="uploadPage()">Upload</a></li>
+				<li><a href="#" onclick="uploadList()">Download</a></li>
+			
+				
+			</ul>	
+		</div>
+		<div id="content">
+			<h2>Home</h2>
+			<ul>
+		<li>	<p>
+				Employee Management System is an application to handle all the details of Employee of SmarTek.
+			</p></li>
+		<li>	<p>
+				There are many functionality to manage the Employee data according to their need.
+			</p></li>
+		<li>	<p>
+				Choose the appropriete option according to your need to manipulate the Employee data.
+			</p></li>
+			<li>	<p>
+				Be Careful to choose delete option because It will be deleted permanentally.
+			</p></li>
+		</ul>
+
+		</div>
+		<div id="footer" >
+			<p style="color: #4CAF50">
+				SmarTek Consultancy Services  Copyright@2016 .For more Information <a href="/" target="_blank">visit smarTek21.com</a>
+			</p>
+		</div>
+	</div>
+</body>
+</html>
